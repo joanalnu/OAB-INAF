@@ -6,3 +6,6 @@ diagnostics.py
 # output from using codecarbon
 emissions.csv
 visualize_emissions.py
+
+# thousands of check figures
+figures/*

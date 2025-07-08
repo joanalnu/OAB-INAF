@@ -2,6 +2,7 @@
 .DS_Store
 .ipynb_checkpoints
 diagnostics.py
+.aiignore
 
 # output from using codecarbon
 emissions.csv

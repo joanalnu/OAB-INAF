@@ -1,8 +1,7 @@
 .idea/
 .DS_Store
 .ipynb_checkpoints
-diagnostics.py
-.aiignore
+__pycache__
 
 # output from using codecarbon
 emissions.csv

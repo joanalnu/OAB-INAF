@@ -16,9 +16,9 @@ original_xcm = np.sum(original_Eiso) / len(original_Eiso)
 Eiso_err = original_Eiso_err  # cosmology invariant
 
 # define the parameter space
-H0 = 70.0
-Om_values = np.linspace(0.0, 2.0, 15)
-Ode_values = np.linspace(0.0, 2.0, 15)
+H0 = 70.0 * 1e5 / 3.086e24 # s^-1
+Om = np.linspace(0.0, 2.0, 15)
+Ode = np.linspace(0.0, 2.0, 15)
 Ok = 0.0
 Or = 0.0
 
@@ -26,29 +26,52 @@ from parameters import CosmologicalParametersClass
 from LambdaCDM import LambdaCDMClass
 
 # Option 1: Create a single model with specific parameter values
-params = CosmologicalParametersClass(H0=H0, Omega_m0=0.3, Omega_Lambda0=0.7, Omega_K0=Ok, Omega_r0=Or)
-LCDM = LambdaCDMClass(params)
-print(LCDM.__dict__)
+# params = CosmologicalParametersClass(H0=H0, Omega_m0=0.3, Omega_Lambda0=0.7, Omega_K0=Ok, Omega_r0=Or)
+# LCDM = LambdaCDMClass(params)
+# print(LCDM.__dict__)
 
-# Option 2: If you want to iterate over parameter combinations
-models = []
-for Om in Om_values:
-    for Ode in Ode_values:
-        # Create parameters for this combination
-        params = CosmologicalParametersClass(H0=H0, Omega_m0=Om, Omega_Lambda0=Ode, Omega_K0=Ok, Omega_r0=Or)
-        # Create model instance
-        model = LambdaCDMClass(params)
-        models.append(model)
+# computing standard luminosity distance (dl(70, O.3, 0.7, 0.0, 0.0))
+standard_params = CosmologicalParametersClass(H0=(70.0 * 1e5 / 3.086e24), Omega_m0=0.3, Omega_Lambda0=0.7, Omega_K0=0.0, Omega_r0=0.0)
+standard_dl = LambdaCDMClass(standard_params).luminosity_distance(z)
 
-# Example usage with the first model
-print(f"First model Omega_m0: {models[0].Omega_m0}")
-print(f"First model H0: {models[0].H0}")
+from GRB import GRBClass
+# initialize EpeakGRB to obtain Epeak barycenter and don't have to compute it each cycle
+Epeak_bc = GRBClass().bc(Epeak)
 
-# Test the hubble parameter calculation
-z_test = 1.0
-H_z = models[0].hubble_param(z_test)
-print(f"H(z=1) = {H_z}")
+from stats import *
+stats = Stats()
 
-# Test the integrand calculation
-integral_result = models[0].integrand_scalar(z_test)
-print(f"Integrand at z=1: {integral_result}")
+# define the parameter space for the Epeak-Eiso correlation
+m_grid = np.linspace(.1,.9,50)
+k_grid = np.linspace(-1., 1., 50)
+
+chi_surface = np.zeros([len(Om), len(Ode)]) # this determines the fitting parameters
+
+# fitting over a parameter grid
+# for i, j in tqdm(itertools.product(range(len(Om)), range(len(Ode))), total=len(Om) * len(Ode), desc="Cosmological fit"):
+for i in range(len(Om)):
+    for j in range(len(Ode)):
+        # create a universe
+        params = CosmologicalParametersClass(H0=H0, Omega_m0=Om[i], Omega_Lambda0=Ode[j], Omega_k0=Ok, Omega_r0=Or)
+
+        LCDMUniverse = LambdaCDMClass(params)
+
+        # now compute fit with LCMDUniverse.luminosity_distance(z)
+        GRB = GRBClass(z=z, Epeak=Epeak, Eiso=original_Eiso, LCDM=LCDMUniverse)
+        Eiso = GRB.isotropic_equivalent_energy(z=z)
+
+        # check that there are not infinite or NaN values
+        # can happen with Om=0.0 Ode=0.0
+        if np.any(~np.isfinite(Eiso)):
+            tqdm.write(f'{i} {j}\tOm={Om[i]}, Ode={Ode[j]}, Eiso contains infinity on NaN')
+            continue
+
+        m, k, chi_surface[i,j], correlation_chi_squared = stats.fitter(m_grid, k_grid, GRB.bc(Eiso), Epeak_bc, xerr=None, yerr=Epeak_err, extra_scatter=None, model="linear_model")
+
+
+mininum, Om_fit, Ode_fit = stats.bestfit_2d(chi_surface, Om, Ode) # this is determined by the fitting parameters
+plotting = plotting(Om=Om, Ode=Ode)
+plot = plotting.create_contour()
+
+
+

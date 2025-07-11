@@ -1,3 +1,11 @@
+# original code from github.com/capibara3/cosmology/blob/main/brane-theory-sims
+# this code is used in parameters.py and in LambdaCDM.py
+
+
+
+
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import cumulative_trapezoid

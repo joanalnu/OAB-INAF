@@ -13,20 +13,19 @@ class LambdaCDMClass:
         for key, value in parameters.__dict__.items():
             setattr(self, key, value)
 
-        print(r"$\Lambda$-CDM Initiated")
-        print("bye")
+        print("LCDM Initiated")
 
     def hubble_param(self, z):
         """
         Hubble Parameter from Lambda-CDM model
-        H(z) = H0 * sqrt(Omega_m0*(1+z)^3 + Omega_r0*(1+z)^4 + Omega_Lambda0 + Omega_K0*(1+z)^2)
+        H(z) = H0 * sqrt(Omega_m0*(1+z)^3 + Omega_r0*(1+z)^4 + Omega_Lambda0 + Omega_k0*(1+z)^2)
         :param z: redshift scalar or array
         :return: values for the hubble parameter in dependence of the parameters and redshift.
         """
         E_squared = (self.Omega_m0 * (1 + z) ** 3 +
                      self.Omega_r0 * (1 + z) ** 4 +
                      self.Omega_Lambda0 +
-                     self.Omega_K0 * (1 + z) ** 2)
+                     self.Omega_k0 * (1 + z) ** 2)
         return self.H0 * np.sqrt(E_squared)
 
     def integrand_scalar(self, z):
@@ -41,17 +40,17 @@ class LambdaCDMClass:
     def proper_distance(self, z):
         com_dist = self.comoving_distance(z)  # in km
         chi = (self.H0 / self.c) * com_dist  # dimensionless
-        sqrt_ok = np.sqrt(np.abs(self.Omega_K0))
+        sqrt_ok = np.sqrt(np.abs(self.Omega_k0))
 
-        if self.Omega_K0 < 0:
+        if self.Omega_k0 < 0:
             return (self.c / self.H0) * np.sin(sqrt_ok * chi) / sqrt_ok
-        elif self.Omega_K0 > 0:
+        elif self.Omega_k0 > 0:
             return (self.c / self.H0) * np.sinh(sqrt_ok * chi) / sqrt_ok
         else:
             return com_dist  # flat universe
 
     def angular_distance(self, z):
-        return (1 / (1 + z)) * self.proper_distance(self.Omega_K0)
+        return (1 / (1 + z)) * self.proper_distance(self.Omega_k0)
 
     def luminosity_distance(self, z):
-        return (1 + z) * self.proper_distance(self.Omega_K0)
+        return (1 + z) * self.proper_distance(self.Omega_k0)

@@ -106,7 +106,7 @@ def update(frame):
     contourf = ax.contourf(Om, Ode, masked_chi_surface.T, levels=50, cmap=cm.viridis)
     contour = ax.contour(Om, Ode, masked_chi_surface.T,
                         levels=[min_chi + 2.3, min_chi + 4.61, min_chi + 6.17],
-                        colors='r', alpha=[1.0, 0.75, 0.5], linestyles=['-', '--', '..'])
+                        colors='r', alpha=[1.0, 0.75, 0.5], linestyles=['solid', 'dashed', 'dotted'])
     scatter = ax.scatter(Om_fit, Ode_fit, c='r', s=50, marker='x',
                         label=f'Best fit: Om={Om_fit:.2f}, Ode={Ode_fit:.2f}')
     title.set_text(f'χ² surface (extra = {current_extra:.2f})')

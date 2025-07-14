@@ -5,7 +5,8 @@ __pycache__
 
 # output from using codecarbon
 emissions.csv
-visualize_emissions.py
+initial_notebooks/visualize_emissions.py
+initial_notebooks/visual_check
 
 # thousands of check figures
 figures/*

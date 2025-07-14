@@ -21,14 +21,14 @@ original_Eiso_err = df['Eiso_err'] / (df['Eiso'] * np.log(10))
 original_Eiso_bc = original_Eiso - np.mean(original_Eiso)
 
 # Cosmology parameter space
-Om = np.linspace(0.0, 2.0, 50)
-Ode = np.linspace(0.0, 2.0, 50)
+Om = np.linspace(0.0, 2.0, 25)
+Ode = np.linspace(0.0, 2.0, 25)
 
 standard_cosmo = LambdaCDM(H0=70, Om0=0.3, Ode0=0.7)
 standard_dl = standard_cosmo.luminosity_distance(z)
 
 # Range of extra values to animate over
-extra_values = np.linspace(np.log10(1), np.log10(10), 25)  # Adjust range and number of frames as needed
+extra_values = np.linspace(np.log10(1), np.log10(5), 25)  # Adjust range and number of frames as needed
 
 # Create figure
 fig, ax = plt.subplots(figsize=(10, 8))
@@ -65,7 +65,8 @@ def calculate_chi_surface(extra):
             popt, pcov = curve_fit(model, Eiso_bc, Epeak_bc, sigma=Epeak_err + extra, p0=[0.5, 0.0], bounds=([0.0, -1.0], [1.0, 1.0]))
             a[i, j], b[i, j] = popt
             residuals = Epeak_bc - model(Eiso_bc, *popt)
-            chi_surface[i, j] = np.sum((residuals / (Epeak_err + extra)) ** 2)
+            dof = len(Eiso_bc) - len(popt)
+            chi_surface[i, j] = np.sum((residuals / (Epeak_err + extra)) ** 2)#/dof
 
     masked_chi_surface = np.ma.array(chi_surface, mask=mask)
     return masked_chi_surface
@@ -108,9 +109,10 @@ def update(frame):
                         levels=[min_chi + 2.3, min_chi + 4.61, min_chi + 6.17],
                         colors='r', alpha=[1.0, 0.75, 0.5], linestyles=['solid', 'dashed', 'dotted'])
     scatter = ax.scatter(Om_fit, Ode_fit, c='r', s=50, marker='x',
-                        label=f'Best fit: Om={Om_fit:.2f}, Ode={Ode_fit:.2f}')
+                        label=f'Best fit: Om={Om_fit:.2f}, Ode={Ode_fit:.2f} chi={np.nanmin(masked_chi_surface)}')
     title.set_text(f'χ² surface (extra = {current_extra:.2f})')
     title = ax.set_title(f'χ² surface (extra = {current_extra:.2f}, factor {(10**current_extra):.3f})')
+    plt.legend()
 
     return contourf, contour, scatter, title
 

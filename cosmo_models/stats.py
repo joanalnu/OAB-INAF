@@ -3,10 +3,10 @@ from tqdm import tqdm
 import itertools
 import logging
 import matplotlib.pyplot as plt
-import seaborn as sns
-from codecarbon import EmissionsTracker
-tracker = EmissionsTracker()
-logging.getLogger("codecarbon").setLevel(logging.CRITICAL)
+# from codecarbon import EmissionsTracker
+# tracker = EmissionsTracker()
+# logging.getLogger("codecarbon").setLevel(logging.CRITICAL)
+#todo: add codecarbon (uncomment this)
 
 class Models:
     def __init__(self, **kwargs):
@@ -63,11 +63,13 @@ class Stats:
         self.models = models
 
     def get_model(self, modelname, x, **kwargs):
-        method = globals().get(modelname)
-        if method:
-            return method(x, **kwargs)
-        else:
-            raise KeyError("Trying to use a model that doesn't exist.")
+        # method = globals().get(modelname)
+        # if method:
+        #     return method(x, **kwargs)
+        # else:
+        #     raise KeyError("Trying to use a model that doesn't exist.")
+        #todo: implement this
+        return models.linear_model(x, **kwargs)
 
     def measure_perpendicular_distances(self, x, y, model="linear_model", **kwargs):
         """

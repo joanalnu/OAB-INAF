@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 # read data
-df = pd.read_csv('../table.csv')
+df = pd.read_csv('./table.csv')
 
 z = df['z']
 Epeak = np.log10(df['Epeak'])
@@ -23,7 +23,7 @@ Ok = 0.0
 Or = 0.0
 
 from parameters import CosmologicalParametersClass
-from LambdaCDM import LambdaCDMClass
+from myLambdaCDM import LambdaCDMClass
 
 # Option 1: Create a single model with specific parameter values
 # params = CosmologicalParametersClass(H0=H0, Omega_m0=0.3, Omega_Lambda0=0.7, Omega_K0=Ok, Omega_r0=Or)
@@ -58,7 +58,7 @@ for i in range(len(Om)):
 
         # now compute fit with LCMDUniverse.luminosity_distance(z)
         GRB = GRBClass(z=z, Epeak=Epeak, Eiso=original_Eiso, LCDM=LCDMUniverse)
-        Eiso = GRB.isotropic_equivalent_energy(z=z)
+        Eiso = GRB.isotropic_equivalent_energy(z=z, DL0=standard_dl)
 
         # check that there are not infinite or NaN values
         # can happen with Om=0.0 Ode=0.0

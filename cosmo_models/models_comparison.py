@@ -1,5 +1,5 @@
 # original code from github.com/capibara3/cosmology/blob/main/brane-theory-sims
-# this code is used in parameters.py and in LambdaCDM.py
+# this code is used in parameters.py and in myLambdaCDM.py
 
 
 

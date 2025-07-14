@@ -11,14 +11,18 @@ class GRBClass:
 
         self.LCDM = kwargs.get('LCDM')
         self.wowaCDM = kwargs.get('wowaCDM')
-        if self.LCDM and not self.wowaCDM:
-            self.cosmos = self.LCDM
-            self.model = "LambdaCDM"
-        elif self.wowaCDM and not self.LCDM:
-            self.cosmos = self.wowaCDM
-            self.model = "w0waCDM"
-        else:
-            raise KeyError("You didn't provide a universe or you provide multiple models.")
+        self.cosmos = self.LCDM
+        self.model = "LambdaCDM"
+
+        # if self.LCDM is not None and self.wowaCDM is None:
+        #     self.cosmos = self.LCDM
+        #     self.model = "LambdaCDM"
+        # elif self.wowaCDM is not None and self.LCDM is None:
+        #     self.cosmos = self.wowaCDM
+        #     self.model = "w0waCDM"
+        # else:
+        #     raise KeyError("You didn't provide a universe or you provide multiple models.")
+        #todo: implement this to change bewteen models
 
     def bc(self, energy):
         """

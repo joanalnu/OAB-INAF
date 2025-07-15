@@ -54,7 +54,7 @@ for i in tqdm(range(len(Om)), desc="Calculating χ² surface", leave=False):
         a[i,j], b[i,j] = popt
         residuals = Epeak_bc - model(Eiso_bc, *popt)
         dof = len(Eiso_bc)-2
-        chi_surface[i, j] = np.sum((residuals / total_err) ** 2)/dof
+        chi_surface[i, j] = np.sum((residuals / total_err) ** 2)#/dof
 
 masked_chi_surface = np.ma.array(chi_surface, mask=mask)
 
@@ -76,3 +76,6 @@ plt.ylabel('Ode')
 plt.title('chi2 surface')
 plt.legend()
 plt.show()
+
+np.save('GRB_chi_surface.npy', chi_surface)
+np.save('GRB_mask.npy', mask)

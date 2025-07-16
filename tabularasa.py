@@ -16,8 +16,8 @@ original_Eiso = np.log10(df['Eiso'])
 original_Eiso_err = df['Eiso_err'] / (df['Eiso'] * np.log(10))
 original_Eiso_bc = original_Eiso - np.mean(original_Eiso)
 
-Om = np.linspace(0.0, 2.0, 25)
-Ode = np.linspace(0.0, 2.0, 25)
+Om = np.linspace(0.0, 2.0, 100)
+Ode = np.linspace(0.0, 2.0, 100)
 
 factor = 1.30
 extra_err = np.log10(factor)

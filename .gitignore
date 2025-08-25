@@ -3,10 +3,6 @@
 .ipynb_checkpoints
 __pycache__
 
-# output from using codecarbon
-emissions.csv
-initial_notebooks/visualize_emissions.py
-initial_notebooks/visual_check
-
 # thousands of check figures
 figures/*
+initial_notebooks/visual_check

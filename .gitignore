@@ -5,4 +5,8 @@ __pycache__
 
 # thousands of check figures
 figures/*
-initial_notebooks/visual_check
+notes/initial_notebooks/visual_check
+
+# private files
+admin/
+papers/

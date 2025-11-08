@@ -5,7 +5,7 @@ from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
-df = pd.read_csv("table.csv")
+df = pd.read_csv("../data/table.csv")
 z = df['z']
 
 Epeak = np.log10(df['Epeak'])

@@ -5,7 +5,7 @@ from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
-with h5py.File('./GW/nsns_population_joan.hdf5', 'r') as table:
+with h5py.File('../data/nsns_population_joan.hdf5', 'r') as table:
     z = table['z'][()]
     Epeak = np.log10(table['Epeak'][()])
     #Epeak_err = 0.1 * Epeak # 10% errors on Epeak

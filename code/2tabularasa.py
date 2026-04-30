@@ -8,7 +8,7 @@ from matplotlib import cm
 from tqdm import tqdm  # Import the progress bar library
 
 # Read data
-df = pd.read_csv("table.csv")
+df = pd.read_csv("../data/table.csv")
 z = df['z']
 
 # Proper error propagation for logarithmic quantities

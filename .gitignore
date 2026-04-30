@@ -1,12 +1,11 @@
-.idea/
 .DS_Store
 .ipynb_checkpoints
 __pycache__
 
 # thousands of check figures
 figures/*
-notes/initial_notebooks/visual_check
 
 # private files
 admin/
 papers/
+notes/

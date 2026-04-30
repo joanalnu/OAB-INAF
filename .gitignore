@@ -1,4 +1,3 @@
-.idea/
 .DS_Store
 .ipynb_checkpoints
 __pycache__
@@ -10,3 +9,6 @@ notes/initial_notebooks/visual_check
 # private files
 admin/
 papers/
+notes/
+
+scientific_report/*

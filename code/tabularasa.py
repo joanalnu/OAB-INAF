@@ -5,7 +5,7 @@ from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
-df = pd.read_csv("table.csv")
+df = pd.read_csv("../data/table.csv")
 z = df['z']
 
 Epeak = np.log10(df['Epeak'])
@@ -66,17 +66,17 @@ Om_fit, Ode_fit = Om[i1], Ode[i2]
 plt.figure()
 #plt.contourf(Om, Ode, masked_chi_surface.T, levels=50)
 plt.contour(Om, Ode, masked_chi_surface.T, levels=[min_chi+2.3, min_chi+4.61, min_chi+9.21], colors='r', alpha=[1.0, 0.75, 0.5], linestyles=['solid','dashed','dotted']) # 68, 95 and 99.7 percent confidence levels for two parameters
-plt.scatter(Om_fit, Ode_fit, c='r', s=50, marker='x', label=f'Best fit: Om={Om_fit:.3f}, Ode={Ode_fit:.3f}, {min_chi:.3f}')
+plt.scatter(Om_fit, Ode_fit, c='r', s=50, marker='x', label=fr'Best fit: $\Omega_m=${Om_fit:.3f}, $\Omega_\Lambda=${Ode_fit:.3f}, {min_chi:.3f}')
 #plt.colorbar(label='chi2')
-plt.scatter(0.3, 0.7, c='black', s=50, marker='x', label=f'Standard LCDM')
+plt.scatter(0.3, 0.7, c='black', s=50, marker='x', label=fr'Standard $\Lambda$CDM')
 plt.scatter(-1, -1, alpha=0.0, label=f'Extra factor: {extra_err:.3f}')
 plt.xlim(0.0,2.0); plt.ylim(0.0, 2.0)
-plt.xlabel('Om')
-plt.ylabel('Ode')
+plt.xlabel(r'$\Omega_\mathrm{m}$')
+plt.ylabel(r'$\Omega_\Lambda$')
 plt.title(r'$\chi^2$ surface')
 plt.legend()
 plt.show()
-plt.savefig('LGRBX2.png')
+plt.savefig('LGRBX2.png', dpi='600')
 
 np.save('LGRB_chi_surface.npy', chi_surface)
 np.save('LGRB_mask.npy', mask)

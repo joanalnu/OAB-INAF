@@ -69,11 +69,11 @@ print(f"min chi: {min_chi:.3f}")
 
 # Flatness Metric: Variance of Chi2 across each dimension
 h0_slice_variance = np.var(chi_volume[min_idx[0], min_idx[1], :])
-print(f"H0 Surface Flatness (Variance): {h0_slice_variance:.2e} (Lower = more degenerate)")
-
 Om_slice_variance = np.var(chi_volume[:, min_idx[1], min_idx[2]])
 Ode_slice_variance = np.var(chi_volume[min_idx[0], :, min_idx[2]])
-print(f'{Om_slice_variance} {Ode_slice_variance}')
+print(f"H0 Surface Flatness (Variance): {h0_slice_variance:.2e}")
+print(f"Om Surface Flatness (Variance): {Om_slice_variance:.2e}")
+print(f"Ode Surface Flatness (Variance): {Ode_slice_variance:.2e}")
 
 # 5. Plotting for Paper
 # Figure A: Amati Fit

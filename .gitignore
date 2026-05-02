@@ -3,9 +3,6 @@
 __pycache__
 venv
 
-# thousands of check figures
-figures/*
-
 # private files
 admin/
 notes/

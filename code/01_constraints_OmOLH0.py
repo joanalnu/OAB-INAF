@@ -17,7 +17,7 @@ original_Eiso = np.log10(df['Eiso']).values
 original_Eiso_bc = original_Eiso - np.mean(original_Eiso)
 
 # 2. Grid Setup (Reduced slightly for speed, increase to 25 if time permits)
-N = 15
+N = 100
 Om_grid = np.linspace(0.0, 1.5, N)
 Ode_grid = np.linspace(0.0, 1.5, N)
 H0_grid = np.linspace(60.0, 80.0, N)

@@ -15,7 +15,7 @@ with h5py.File('../data/nsns_population_joan.hdf5', 'r') as table:
 dl_err = 0.01 * dl # fix error 5% of dL value (Note: 0.01 is 1%, update to 0.05 if 5% is intended)
 
 # Grid setup
-N = 15
+N = 100
 
 Om_grid = np.linspace(0.1, 2.0, N)
 Ode_grid = np.linspace(0.1, 2.0, N)

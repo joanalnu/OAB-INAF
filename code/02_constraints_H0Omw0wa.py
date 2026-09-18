@@ -15,7 +15,7 @@ original_Eiso = np.log10(df['Eiso']).values
 original_Eiso_bc = original_Eiso - np.mean(original_Eiso)
 
 # 2. 4D Grid Setup
-N = 12 # Keep N small for 4D (12^4 = 20,736 iterations)
+N = 20 # Keep N small for 4D (12^4 = 20,736 iterations)
 Om_grid = np.linspace(0.1, 0.6, N)
 w0_grid = np.linspace(-2.5, 0.5, N)
 wa_grid = np.linspace(-3.0, 2.0, N) # Refined physical range
